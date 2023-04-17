@@ -1,0 +1,203 @@
+﻿@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<IdentityUser> _signinManager
+
+<!DOCTYPE html>
+
+<html lang="en" class="no-js">
+
+
+<head>
+	<!-- Basic need -->
+	<meta charset="UTF-8">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<meta name="author" content="">
+	<link rel="icon" type="image/x-icon" href="~/images_cinema/favicon.png">
+
+	<link rel="profile" href="#">
+
+	<title>@ViewData["TitleCinema"] | Cinema</title>
+
+	@RenderSection("CinemaStyles", required: false)
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	
+	<!--Google Font-->
+	<link rel="stylesheet" href='http://fonts.googleapis.com/css?family=Dosis:400,700,500|Nunito:300,400,600' />
+	<!-- Mobile specific meta -->
+	<meta name=viewport content="width=device-width, initial-scale=1">
+	<meta name="format-detection" content="telephone-no">
+
+
+	<!-- CSS files -->
+	<link rel="stylesheet" href="~/cinema/css/plugins.css">
+	<link rel="stylesheet" href="~/cinema/css/style.css">
+	<script src="https://kit.fontawesome.com/a49558d437.js" crossorigin="anonymous"></script>
+
+</head>
+<body>
+	<!--preloading-->
+	<div id="preloader">
+		<a asp-action="Index" asp-controller="Movie"> <img class="logo" src="~/images_cinema/logo1.png" alt="" width="119" height="58"></a>
+		<div id="status">
+			<span></span>
+			<span></span>
+		</div>
+	</div>
+	<!-- BEGIN | Header -->
+	<header class="ht-header">
+		<div class="container">
+			<nav class="navbar navbar-default navbar-custom">
+				<!-- Brand and toggle get grouped for better mobile display -->
+				<div class="navbar-header logo">
+					<div class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+						<span class="sr-only">Toggle navigation</span>
+						<div id="nav-icon1">
+							<span></span>
+							<span></span>
+							<span></span>
+						</div>
+					</div>
+					<a asp-action="Index" asp-controller="Movie"><img class="logo" src="/images_cinema/logo1.png" alt="" width="119" height="58"></a>
+				</div>
+				<!-- Collect the nav links, forms, and other content for toggling -->
+				<div class="collapse navbar-collapse flex-parent" id="bs-example-navbar-collapse-1">
+					<ul class="nav navbar-nav flex-child-menu menu-left">
+						<li class="hidden">
+							<a href="#page-top"></a>
+						</li>
+						<li class="dropdown first">
+							<a class="btn btn-default dropdown-toggle lv1" asp-action="Index" asp-controller="Movie">
+								Home
+							</a>
+
+						</li>
+
+						<li class="dropdown first">
+							<a class="btn btn-default dropdown-toggle lv1" asp-action="AllMovies" asp-controller="Movie">
+								Movies
+							</a>
+
+						</li>
+						<li class="dropdown first">
+							<a class="btn btn-default dropdown-toggle lv1" asp-action="TicketPrice" asp-controller="Movie">
+								Ticket Prices
+							</a>
+						</li>
+					</ul>
+					<ul class="nav navbar-nav flex-child-menu menu-right">
+						@if (_signinManager.IsSignedIn(User))
+						{
+							<li class="nav-item">
+								<a asp-controller="Booking" asp-action="ViewBookings" class="nav-link">Your Bookings</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link active" style="color: #dd003f">Hi, @User.Identity.Name</a>
+							</li>
+							<li class="btn signupLink">
+								<form asp-controller="Account" asp-action="Logout">
+									<input type="submit" value="Logout" class="LogoutBtn">
+								</form>
+							</li>
+						}
+						else
+						{
+							<li class="loginLink">
+								<a asp-controller="Account" asp-action="Login" class="nav-link">Login</a>
+							</li>
+							<li class="btn signupLink">
+								<a asp-controller="Account" asp-action="Register" class="nav-link">Register</a>
+							</li>
+						}
+
+					</ul>
+				</div>
+				<!-- /.navbar-collapse -->
+			</nav>
+
+			<!-- top search form -->
+			<div class="container">
+				<form asp-action="SearchResults" asp-controller="Movie" method="get">
+					<input type="search" value=@ViewData["searching"] name="keyword" placeholder="Looking for a movie? Please enter your name here..." style="width:100%; background-color:rgba(2, 13, 24, 0.2); font-weight:bold; margin-bottom: 10px; color: white;">
+					<input type="submit" style="display: none" />
+				</form>
+			</div>
+		</div>
+	</header>
+	<!-- END | Header -->
+	@RenderBody()
+
+
+	<!--end of latest new v1 section-->
+	<!-- footer section-->
+	<footer class="ht-footer">
+		<div class="container">
+			<div class="flex-parent-ft">
+				<div class="flex-child-ft item1">
+					<a asp-action="Index" asp-controller="Movie"><img class="logo" src="~/images_cinema/logo1.png" alt=""></a>
+					<p>
+						Detech Building, 8 Ton That Thuyet,<br>
+						My Dinh, Tu Liem, Ha Noi, Viet Nam.
+					</p>
+					<p>Call us: <a href="#">(+84) 123 456 789</a></p>
+				</div>
+				<div class="flex-child-ft item2">
+					<h4>Resources</h4>
+					<ul>
+						<li><a href="#">About</a></li>
+						<li><a href="#">Blockbuster</a></li>
+						<li><a href="#">Contact Us</a></li>
+						<li><a href="#">Forums</a></li>
+						<li><a href="#">Blog</a></li>
+						<li><a href="#">Help Center</a></li>
+					</ul>
+				</div>
+				<div class="flex-child-ft item3">
+					<h4>Legal</h4>
+					<ul>
+						<li><a href="#">Terms of Use</a></li>
+						<li><a href="#">Privacy Policy</a></li>
+						<li><a href="#">Security</a></li>
+					</ul>
+				</div>
+				<div class="flex-child-ft item4">
+					<h4>Account</h4>
+					<ul>
+						<li><a href="#">My Account</a></li>
+						<li><a href="#">Watchlist</a></li>
+						<li><a href="#">Collections</a></li>
+						<li><a href="#">User Guide</a></li>
+					</ul>
+				</div>
+				<div class="flex-child-ft item5">
+					<h4>Newsletter</h4>
+					<p>Subscribe to our newsletter system now <br> to get latest news from us.</p>
+					<form action="#">
+						<input type="text" placeholder="Enter your email...">
+					</form>
+					<a href="#" class="btn">Subscribe now <i class="ion-ios-arrow-forward"></i></a>
+				</div>
+			</div>
+		</div>
+		<div class="ft-copyright">
+
+			<div class="backtotop">
+				<p><a href="#" id="back-to-top">Back to top  <i class="ion-ios-arrow-thin-up"></i></a></p>
+			</div>
+		</div>
+	</footer>
+	<!-- end of footer section-->
+	<script src="~/cinema/lib/jquery/dist/jquery.min.js"></script>
+	<script src="~/cinema/js/plugins.js"></script>
+	<script src="~/cinema/js/plugins2.js"></script>
+	<script src="~/cinema/js/custom.js"></script>
+
+	@await RenderSectionAsync("CinemaScripts", required: false)
+
+</body>
+
+
+</html>
+

@@ -1,0 +1,123 @@
+﻿@model IEnumerable<Movie>
+
+
+@{
+	ViewData["TitleCinema"] = "Home Page";
+    Layout = "_LayoutCinema";
+}
+
+<div class="slider movie-items">
+	<div class="container">
+		<div class="row ipad-width">
+			<div class="social-link">
+				<p>Follow us: </p>
+				<a href="https://www.facebook.com/"><i class="ion-social-facebook"></i></a>
+				<a href="https://www.twitter.com/"><i class="ion-social-twitter"></i></a>
+				<a href="https://www.google.com/"><i class="ion-social-googleplus"></i></a>
+				<a href="https://www.youtube.com/"><i class="ion-social-youtube"></i></a>
+			</div>
+			
+			<div class="slick-multiItemSlider">
+				@foreach (var movie in (List<Movie>)ViewData["NowShowing"])
+				{
+					string posterPath = "~/images_cinema/" + (movie.PosterPath ?? "default-poster.jpg");
+
+					<div class="movie-item  col-sm-12">
+						<a class="mv-img" asp-controller="Movie" asp-action="Details" asp-route-id="@movie.Id">
+							<a asp-controller="Movie" asp-action="Details" asp-route-id="@movie.Id">
+								<img src="@posterPath" asp-append-version="true" style="width:290px; height:440px; object-fit:cover">
+							</a>
+						</a>
+						<div class="title-in">
+							<div class="cate">
+								<span class="blue"><a>@movie.Genre</a></span>
+							</div>
+							<h6 style="text-align: left">
+								<a asp-action="Details" asp-controller="Movie" asp-route-id="@movie.Id">@movie.Title</a>
+							</h6>
+						</div>
+					</div>
+				}
+			</div>
+			
+		</div>
+	</div>
+</div>
+<div class="movie-items">
+	<div class="container">
+		<div class="row ipad-width">
+			<div class="col-md-8">
+				<div class="title-hd">
+					<h2>Coming Soon</h2>
+					<a class="viewall" asp-action="AllMovies" asp-controller="Movie">View all Movies<i class="ion-ios-arrow-right"></i></a>
+				</div>
+				<div class="tabs">
+					<div class="tab-content">
+						<div id="tab1" class="tab active">
+							<div class="row">
+								<div class="slick-multiItem">
+									@foreach (var movie in (List<Movie>)ViewData["CoomingSoon"])
+									{
+										string posterPath = "~/images_cinema/" + (movie.PosterPath ?? "default-poster.jpg");
+
+										<div class="movie-item col-sm-12">
+											<a class="mv-img" asp-controller="Movie" asp-action="Details" asp-route-id="@movie.Id">
+												<a asp-controller="Movie" asp-action="Details" asp-route-id="@movie.Id">
+													<img src="@posterPath" asp-append-version="true" style="width: 182px; height:240px; object-fit:cover">
+												</a>
+											</a>
+											<div class="title-in">
+												<div class="cate">
+													<span class="blue"><a>@movie.Genre</a></span>
+												</div>
+												<h6>
+													<a asp-controller="Movie" asp-action="Details" asp-route-id="@movie.Id">@movie.Title</a>
+												</h6>
+											</div>
+										</div>
+									}
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="sidebar">
+					<div class="celebrities">
+						<h4 class="sb-title">Some Outstanding Actors</h4>
+						<div class="celeb-item">
+							<img src="images_cinema/actor/VinDiesel.jpg" alt="" style="width:100px;height:100px; border-radius:50%;object-fit:cover">
+							<div class="celeb-author">
+								<h6><a href="#">Vin Diesel</a></h6>
+							</div>
+						</div>
+						<div class="celeb-item">
+							<img src="images_cinema/actor/TranThanh.jpg" alt="" style="width:100px;height:100px; border-radius:50%;object-fit:cover">
+							<div class="celeb-author">
+								<h6><a href="#">Tran Thanh</a></h6>
+							</div>
+						</div>
+						<div class="celeb-item">
+							<img src="images_cinema/actor/WillSmith.jpg" alt="" style="width:100px;height:100px; border-radius:50%;object-fit:cover">
+							<div class="celeb-author">
+								<h6><a href="#">Will Smith</a></h6>
+							</div>
+						</div>
+						<div class="celeb-item">
+							<img src="images_cinema/actor/SongHye-kyo.jpg" alt="" style="width:100px;height:100px; border-radius:50%;object-fit:cover">
+							<div class="celeb-author">
+								<h6><a href="#">Song Hye-kyo</a></h6>
+							</div>
+						</div>
+					</div>
+
+					<div class="ads">
+						<img src="images_cinema/uploads/ads1.png" alt="" width="336" height="296">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+

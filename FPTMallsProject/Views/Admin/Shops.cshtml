@@ -1,0 +1,41 @@
+﻿@model IEnumerable<Shop>
+
+@{
+    ViewBag.Title = "Shops | Admin";
+    Layout = "_LayoutAdmin";
+
+    var index = 0;
+}
+
+<div class="container my-3">
+    <h2 class="my-3">List of shops</h2>
+    <hr class="text-primary" />
+
+    <a asp-action="CreateShop" class="btn btn-sm btn-primary">Add New Shop</a>
+    <table class="table table-hover my-3">
+        <thead class="table-dark">
+            <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var shop in Model)
+            {
+                index++;
+                <tr>
+                    <td>@index</td>
+                    <td>@Html.DisplayFor(modelItem => shop.Name)</td>
+                    <td>
+                        <a asp-action="EditShop" asp-route-id="@shop.Id">Edit</a>
+                        &nbsp;
+                        <a asp-action="DeleteShop" asp-route-id="@shop.Id" onclick="return confirm('Are you sure you want to delete this shop?')" style="color: red; text-decoration: underline;">
+                            Delete
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

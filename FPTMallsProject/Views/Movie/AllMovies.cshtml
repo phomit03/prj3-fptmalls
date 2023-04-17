@@ -1,0 +1,119 @@
+﻿@model IEnumerable<Movie>
+
+@{
+    ViewData["TitleCinema"] = "All Movies";
+
+    Layout = "_LayoutCinema";
+}
+
+<div class="hero common-hero">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="hero-ct">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="page-single movie_list">
+    <div class="container">
+        <div class="row ipad-width2">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+
+                @foreach (var movie in Model)
+                {
+                    string posterPath = "~/images_cinema/" + (movie.PosterPath ?? "default-poster.jpg");
+
+                    <div class="movie-item-style-2">
+                        <div class="col-md-4 col-sm-12 col-xs-12">
+
+                            <a asp-controller="Movie" asp-action="Details" asp-route-id="@movie.Id">
+                                <img src="@posterPath" asp-append-version="true" style="width:350px; height:500px; object-fit:cover">
+                            </a>
+                        </div>
+
+                        <div class="col-md-8 col-sm-12 col-xs-12">
+
+                            <div class="mv-item-infor">
+                                <div class="typeRelease">
+                                    @if ((DateTime.Parse(movie.ReleaseDate) <= DateTime.Now))
+                                    {
+                                        <button class="btn btnNowShowing">
+                                            Now Showing
+                                        </button>
+                                    }
+                                    else
+                                    {
+                                        <button class="btn btnComingSoon">
+                                            Coming Soon
+                                        </button>
+                                    }
+                                </div>
+
+                                <h6><a asp-controller="Movie" asp-action="Details" asp-route-id="@movie.Id" style="font-size: 27px">@movie.Title</a></h6>
+                                <p class="rate"><i class="ion-android-star"></i><span>@movie.Ratings</span>/10</p>
+                                <p class="describe">@movie.Describe</p>
+                                <p>Genre: @movie.Genre</p>
+                                <p>Duration: @movie.Duration</p>
+                                <p>Release Date: @DateTime.Parse(movie.ReleaseDate).ToString("dd/MM/yyyy")</p>
+                                <p>Director: @movie.Director</p>
+                                <p>Actor: @movie.Actor</p>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+@section CinemaStyles{
+    <style>
+        .typeRelease {
+            margin-bottom: 30px;
+        }
+
+        .mv-item-infor {
+            margin-bottom: 50px;
+        }
+
+        .btn {
+            display: inline-block;
+            font-weight: 400;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            border: 1px solid transparent;
+            padding: 0.375rem 0.75rem;
+            font-size: 1rem;
+            line-height: 1.5;
+            border-radius: 0.25rem;
+            transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+        }
+
+        .btnNowShowing {
+            font-size: 16px;
+            color: #fff;
+            background-color: #dc3545;
+            border-color: #dc3545;
+            border-radius: 5px;
+        }
+
+        .btnComingSoon {
+            font-size: 16px;
+            color: #fff;
+            background-color: #6c757d;
+            border-color: #6c757d;
+            border-radius: 5px;
+        }
+    </style>
+}

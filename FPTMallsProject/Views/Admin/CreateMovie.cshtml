@@ -1,0 +1,121 @@
+﻿@model MovieCreateViewModel
+
+@{
+    ViewBag.Title = "Add Movie | Admin";
+    Layout = "_LayoutAdmin";
+
+}
+
+<div class="container">
+    <h2 class="my-3">Add new movie
+        <a asp-for="Admin" asp-action="Movies" class="btn btn-warning" style="float: right">Back List Movies</a>
+    </h2>
+    <hr class="text-primary" />
+    <form asp-action="CreateMovie" method="post" enctype="multipart/form-data">
+        <table class="table table-borderless">
+            <tr>
+                <td style="width:200px;">
+                    <label asp-for="Title" class="form-lable"></label>
+                </td>
+                <td>
+                    <input asp-for="Title" class="form-control w-50" />
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label asp-for="ReleaseYear" class="form-label"></label>
+                </td>
+                <td>
+                    <input type="date" asp-for="ReleaseYear" class="form-control w-50" />
+                    <span asp-validation-for="ReleaseYear" class="text-danger"></span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label class="form-lable">Ratings / 10</label>
+                </td>
+                <td>
+                    <input type="number" min="1" max="10" value="1" asp-for=" Ratings" class="form-control w-50" />
+                    <span asp-validation-for="Ratings" class="text-danger"></span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label asp-for="Duration" class="form-label"></label>
+                </td>
+                <td>
+                    <input type="time" asp-for="Duration" class="form-control w-50" />
+                    <span asp-validation-for="Duration" class="text-danger"></span>
+                </td>
+            </tr>
+            <tr>
+                <td style="width:200px;">
+                    <label asp-for="Language" class="form-label"></label>
+                </td>
+                <td>
+                    <input asp-for="Language" class="form-control w-50" />
+                    <span asp-validation-for="Language" class="text-danger"></span>
+                </td>
+            </tr>
+            <tr>
+                <td style="width:200px;">
+                    <label asp-for="Actor" class="form-label"></label>
+                </td>
+                <td>
+                    <input asp-for="Actor" class="form-control w-50" />
+                    <span asp-validation-for="Actor" class="text-danger"></span>
+                </td>
+            </tr>
+            <tr>
+                <td style="width:200px;">
+                    <label asp-for="Director" class="form-label"></label>
+                </td>
+                <td>
+                    <input asp-for="Director" class="form-control w-50" />
+                    <span asp-validation-for="Director" class="text-danger"></span>
+                </td>
+            </tr>
+            <tr>
+                <td style="width:200px;">
+                    <label asp-for="Genre" class="form-label"></label>
+                </td>
+                <td>
+                    <input asp-for="Genre" class="form-control w-50" />
+                    <span asp-validation-for="Genre" class="text-danger"></span>
+                </td>
+            </tr>
+            <tr>
+                <td style="width:200px;">
+                    <label asp-for="Trailer" class="form-label"></label>
+                </td>
+                <td>
+                    <input asp-for="Trailer" class="form-control w-50" />
+                    <span asp-validation-for="Trailer" class="text-danger"></span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label asp-for="Describe" class="form-label"></label>
+                </td>
+                <td>
+                    <textarea asp-for="Describe" class="form-control w-50" cols="20" rows="5"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label asp-for="Poster" class="form-label"></label>
+                </td>
+                <td>
+                    <input asp-for="Poster" class="form-control w-50" />
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <button type="submit" class="btn btn-primary">Create</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>

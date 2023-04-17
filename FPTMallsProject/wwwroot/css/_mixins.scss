@@ -1,0 +1,29 @@
+@mixin breakpoint($point) {
+    @if $point == sm {
+      @media screen and (min-width: 576px) { @content; }
+    }
+  
+    @else if $point == md {
+      @media screen and (min-width: 768px) { @content; }
+    }
+  
+    @else if $point == lg {
+      @media screen and (min-width: 992px) { @content; }
+    }
+  
+    @else if $point == xl {
+      @media screen and (min-width: 1200px) { @content; }
+    }
+  
+    @else if $point == xxl {
+      @media screen and (min-width: 1400px) { @content; }
+    }
+  
+    @else if $point == iphone8 {
+      @media only screen and (min-width: 375px) and (max-width: 375px) and (orientation: portrait) { @content; }
+    }
+  
+    @else {
+      @media screen and (max-width: 575px) { @content; }
+    }
+  }

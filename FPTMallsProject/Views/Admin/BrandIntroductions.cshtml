@@ -1,0 +1,45 @@
+﻿@model IEnumerable<BrandIntroduction>
+
+@{
+    ViewBag.Title = "BrandIntroductions | Admin";
+    Layout = "_LayoutAdmin";
+
+    var index = 0;
+}
+
+<div class="container my-3">
+    <h2 class="my-3">List of brand_introductions</h2>
+    <hr class="text-primary" />
+
+    <a asp-action="CreateBrandIntroduction" class="btn btn-sm btn-primary">Add New Brand_Introduction</a>
+    <table class="table table-hover my-3">
+        <thead class="table-dark">
+            <tr>
+                <th>#</th>
+                <th>Title</th>
+                <th>Content</th>
+                <th>Brand</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var brandIntroduction in Model)
+            {
+                index++;
+                <tr>
+                    <td>@index</td>
+                    <td>@Html.DisplayFor(modelItem => brandIntroduction.Title)</td>
+                    <td>@Html.Raw(brandIntroduction.Content.Substring(0, 50))</td>
+                    <td>@Html.DisplayFor(modelItem => brandIntroduction.Brand.Name)</td>
+                    <td>
+                        <a asp-action="EditBrandIntroduction" asp-route-id="@brandIntroduction.Id">Edit</a>
+                        &nbsp;
+                        <a asp-action="DeleteBrandIntroduction" asp-route-id="@brandIntroduction.Id" onclick="return confirm('Are you sure you want to delete this brand_introduction?')" style="color: red; text-decoration: underline;">
+                            Delete
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

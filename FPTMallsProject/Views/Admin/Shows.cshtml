@@ -1,0 +1,62 @@
+﻿@model IEnumerable<Show>
+
+@{
+    ViewBag.Title = "Shows | Admin";
+    Layout = "_LayoutAdmin";
+
+    var index = 0;
+}
+
+
+<div class="container my-3">
+    <h2 class="my-3">List of showtimes</h2>
+    <hr class="text-primary" />
+
+    <a asp-action="DeleteExpiredShow" class="btn btn-sm btn-danger">Delete Expired Show</a>
+    <a asp-controller="Admin" asp-action="Movies" class="btn btn-sm btn-warning" style="float: right">Back List Movie</a>
+    <table class="table table-hover my-3">
+        <thead class="table-dark">
+            <tr>
+                <th>#</th>
+                <th>Movie</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Language</th>
+                <th>Time</th>
+                <th>Price</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var show in Model)
+            {
+                index++;
+                <tr>
+                    <td>@index</td>
+                    <td>@show.Movie.Title</td>
+                    <td>@show.StartDate</td>
+                    <td>@show.EndDate</td>
+                    <td>@show.Language</td>
+                    <td>@show.Time</td>
+                    <td>@show.Price $</td>
+                    <td>
+                        <a asp-action="EditShow" asp-route-id="@show.Id">Edit</a>
+                        &nbsp;
+                        <a href="#" onclick="confirmDelete(@show.Id)" style="color:red">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+ @section AdminScripts {
+    <script>
+        function confirmDelete(Id) {
+            if (confirm("Are you sure you want to delete this show?")) {
+                window.location.href = '/Admin/DeleteShow/' + Id;
+            }
+        }
+    </script>
+}
+

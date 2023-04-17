@@ -1,0 +1,23 @@
+@font-face {
+    font-family: "Henry Sans Black";
+    src: url(../fonts/HenrySansBlack.dbe30471.woff);
+    font-display: swap;
+  }
+  
+  @font-face {
+    font-family: "Henry Sans Bold";
+    src: url(../fonts/HenrySansBold.6affb29a.woff);
+    font-display: swap;
+  }
+  
+  @font-face {
+    font-family: "Henry Sans Light";
+    src: url(../fonts/HenrySansMedium.904a762e.woff);
+    font-display: swap;
+  }
+  
+  @font-face {
+    font-family: "Henry Sans";
+    src: url(../fonts/HenrySansRegular.a74efa90.woff);
+    font-display: swap;
+  }

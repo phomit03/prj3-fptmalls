@@ -1,0 +1,143 @@
+﻿@model IEnumerable<Booking>
+
+@inject IMovieRepository _movieRepo
+
+@{
+    Layout = "_LayoutCinema";
+    ViewData["TitleCinema"] = "Booking History";
+}
+
+<div class="slider movie-items">
+    <div class="container">
+        <div class="container">
+            <div class="row ipad-width">
+                <div class="col-md-12">
+
+                    <div class="title-hd">
+                        <h2>BOOKING HISTORY: Note that tickets will expire 30 minutes after the movie is shown, so you should come to the theater early to have time to receive tickets!</h2>
+                    </div>
+                    <div class="tabs">
+
+                        <div class="tab-content">
+
+                            <div id="tab22" class="tab active">
+                                <div class="row">
+                                    <div class="slick-multiItem h-100">
+                                        @foreach (var booking in Model)
+                                        {
+                                            //check ticket expired: expires 30 minutes after the movie premiere
+                                            var showDateTime = DateTime.Parse($"{booking.ShowDate} {booking.Show.Time}");
+                                            var isUnExpired = showDateTime.AddMinutes(30) >= DateTime.Now;
+
+                                            <div class="col-4 card text-center my-3">
+                                                <div class="card-header @(isUnExpired? "header-unExpired" : "header-expired")">
+                                                    <span class="title">@_movieRepo.GetMovie(booking.Show.MovieId).Title</span>
+                                                    <span class="title">(@booking.Show.Language)</span>
+                                                </div>
+
+
+                                                <div class="card-body @(isUnExpired? "bg-unExpired" : "bg-expired")">
+                                                    <p class="card-text mb-1"><span class="text-muted">Seat No : </span>@booking.SeatNo</p>
+                                                    <p class="card-text mb-1"><span class="text-muted">Show Time : </span>@booking.Show.Time</p>
+                                                    <p class="card-text mb-1"><span class="text-muted">Show Date : </span>@DateTime.Parse(booking.ShowDate).ToString("dd/MM/yyyy")</p>
+                                                    <p class="card-text mb-1"><span class="text-muted">Price : </span>@booking.Show.Price $</p>
+                                                    <p class="card-text mb-1"><span class="text-muted">Code : </span>@booking.Code</p>
+                                                    <p class="card-text mb-1"><span class="text-muted">Booking Time : </span>@booking.BookingDateTime</p>
+                                                </div>
+
+                                                <div class="card-footer @(isUnExpired? "ft-unExpired" : "ft-expired")">
+                                                    Status: @(isUnExpired ? "unexpired" : "expired")
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@**********************************************************CSS*********************************************************@
+
+@section CinemaStyles{
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        .isActive {
+            border-radius: 20%;
+            float: right;
+        }
+
+        .text-muted {
+            font-size: 1.4rem;
+            font-weight: bold;
+        }
+
+        .text-center {
+            margin-right: 15px;
+            border-radius: 5px;
+        }
+
+        .bg-unExpired {
+            background-color: white;
+        }
+
+        .bg-expired {
+            background-color: #cfcfcf;
+        }
+
+        .title {
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+
+        .header-unExpired {
+            background-color: #dd003f;
+            padding: 10px;
+            border-radius: 5px 5px 0 0;
+        }
+
+        .header-expired {
+            background-color: #b3b9be;
+            padding: 10px;
+            border-radius: 5px 5px 0 0;
+        }
+
+        .header-unExpired .title {
+            color: white
+        }
+
+        .header-expired .title {
+            color: black
+        }
+
+        .ft-unExpired {
+            background-color: #dd003f;
+            border-radius: 0 0 5px 5px;
+            padding: 5px;
+            color: white
+        }
+
+        .ft-expired {
+            background-color: #b3b9be;
+            border-radius: 0 0 5px 5px;
+            padding: 5px;
+            color: black
+        }
+
+        .card-text {
+            margin-bottom: 0 !important;
+            padding: 10px;
+            line-height: 12px !important;
+            text-align: left;
+            color: black
+        }
+    </style>
+}
+
+
+
+

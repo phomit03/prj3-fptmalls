@@ -1,0 +1,117 @@
+﻿@model BrandIntroduction
+
+@{
+    ViewData["Title"] = "Detail";
+    Layout = "_LayoutMalls";
+
+}
+
+<section id="hero" class="inside-pages">
+    <div class="banners">
+        <div class="page-banner-title container-fluid h-100 w-100 bg-primary shops bg">
+            <div class="row">
+                <div class="col-md-10 offset-md-1">
+                    <div class="display-4 text-white">
+                        <div class="text-uppercase">
+                            <p><strong>Shops</strong></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="page-banner-logo"></div>
+        </div>
+    </div>
+</section>
+
+@if (Model != null && Model.Brand != null)
+{
+
+    <section>
+        <div class="container-fluid">
+            <div class="row">
+
+                <div class="col-md-10 offset-md-1 px-0 px-md-1">
+                    <div id="breadcrumbs" class="container-fluid">
+                        <ul class="breadcrumb bd-b_none">
+                            <li>
+                                <a asp-controller="Home" asp-action="Index"><span class="fa fa-home" aria-hidden="true"></span></a>
+                            </li>
+                            <li>
+                                <a asp-controller="FptMall" asp-action="@Model.Brand.Shop.Name.Replace(" ", "")">@Model.Brand.Shop.Name</a>
+                            </li>
+                            <li>
+                                <a asp-controller="FptMall" asp-action="@Model.Brand.Name.Replace(" ", "")">@Model.Brand.Name</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="page bg-stall" id="eventDetailBooths">
+                        <div class="container pt-md-3 pt-lg-0">
+                            <section class="section pb-0 pt-md-0 mt-md-33 mb-sm-20 mt-xl-17" id="eventDetailBooth">
+                                <div class="row mb-md-80 mt-xl-50 mb-xl-120">
+                                    <div class="col-lg-9 order-2 order-sm-2 order-md-1">
+                                        <div class="pb-4">
+                                            <h2 class="m-0 fs-20-mb text-uppercase fw-bold ">@Model.Brand.Name</h2>
+                                        </div>
+                                        <div class="d-lg-flex">
+                                            <div class="me-lg-90 me-md-40 mb-sm-12 pr-3">
+                                                <p class="fw-semibold fs-14-mb-tl mb-md-20 text-nowrap mb-0 fw-600">
+                                                    <i class="fa-solid fa-cube" style="color: #e90c0c;"></i>
+                                                    <span class="text-muted me-1 fw-400">Categories:</span>
+                                                    @Model.Brand.Shop.Name
+                                                </p>
+                                            </div>
+                                            <div class="me-lg-90 me-md-40 mb-sm-12 pr-3">
+                                                <p class="fw-semibold fs-14-mb-tl fs-lg-16 mb-0 fw-600">
+                                                    <i class="fa-solid fa-location-dot" style="color: #e90c0c;"></i>
+                                                    <span class="text-muted me-1">Location:</span>
+                                                    @Model.Brand.Level_brand
+                                                </p>
+                                            </div>
+                                            <div class="mb-sm-12">
+                                                <p class="fw-semibold fs-14-mb-tl fs-lg-16 mb-0 fw-600">
+                                                    <i class="fa-solid fa-phone" style="color: #e90c0c;"></i>
+                                                    <span class="text-muted me-1 fw-400">Hotline:</span>
+
+                                                    @Model.Title
+
+                                                </p>
+                                            </div>
+
+                                        </div>
+                                        @if (Model.Content != null)
+                                        {
+                                            <div class="brand-content lh-25-mb">
+                                                @Html.Raw(Model.Content)
+                                            </div>
+                                        }
+                                    </div>
+                                    <div class="col-lg-3 order-1 order-sm-1 order-md-2 d-none d-lg-block position-relative mt-5 pt-2">
+                                        <div class="card card_image">
+                                            <div class="card-figure w-100 border">
+                                                <div class="ratio" style="--bs-aspect-ratio: 75%;">
+                                                    <div class="w-100 h-100 p-md-20 p-lg-30 d-flex align-items-center justify-content-center mx-auto overflow-hidden" style="padding: 16px">
+                                                        <img class="mw-100 mh-100 w-auto h-auto p-0" style="object-fit: contain;" src="@("~/image/"+@Model.Brand.Image)" asp-append-version="true" alt="@Model.Brand.Name">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+}

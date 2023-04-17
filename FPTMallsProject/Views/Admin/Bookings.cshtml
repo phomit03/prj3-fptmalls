@@ -1,0 +1,92 @@
+﻿@model IEnumerable<Booking>
+
+@inject IMovieRepository _movieRepo
+
+@{
+    ViewBag.Title = "Bookings | Admin";
+    Layout = "_LayoutAdmin";
+
+    var index = 0;
+}
+
+<div class="container my-3">
+    <form method="get" class="form-inline my-3">
+        <div class="form-group text-right">
+            <input type="text" name="searchCode" class="form-control mr-sm-2" placeholder="Search by code to check status">
+            <button type="submit" class="btn btn-dark">Search</button>
+        </div>
+    </form>
+
+    <table class="table table-hover my-3">
+        <thead class="table-dark">
+            <tr>
+                <th>#</th>
+                <th>Movie</th>
+                <th>User Name</th>
+                <th>Email</th>
+                <th>Show Date </th>
+                <th>Language</th>
+                <th>Time</th>
+                <th>Seat</th>
+                <th>Price</th>
+                <th>Code</th>
+                <th>Status</th>
+                <th>Booking Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var booking in Model)
+            {
+                //check ticket expired: expires 30 minutes after the movie premiere
+                var showDateTime = DateTime.Parse($"{booking.ShowDate} {booking.Show.Time}");
+                var isExpired = showDateTime.AddMinutes(30) >= DateTime.Now;
+
+                index++;
+            <tr>
+                <td>@index</td>
+                <td>@_movieRepo.GetMovie(booking.Show.MovieId).Title</td>
+                <td>@booking.IdentityUser.UserName</td>
+                <td>@booking.IdentityUser.Email</td>
+                <td>@booking.ShowDate</td>
+                <td>@booking.Show.Language</td>
+                <td>@booking.Show.Time</td>
+                <td>@booking.SeatNo</td>
+                <td>@booking.Show.Price $</td>
+                <td>@booking.Code</td>
+                @if(isExpired) {
+                    <td class="text-primary">unexpired</td>
+                } else {
+                    <td class="text-danger">expired</td>                  
+                }
+                <td>@booking.BookingDateTime</td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
+
+
+@section AdminStyles{
+    <style>
+        .form-group .text-right {
+            float: right;
+        }
+
+        .form-inline .form-control {
+            display: inline-block;
+            width: 70%;
+            vertical-align: middle;
+        }
+
+        .form-inline .btn {
+            display: inline-block;
+            vertical-align: middle;
+            width: 8rem;
+        }
+
+    </style>
+}
+
+

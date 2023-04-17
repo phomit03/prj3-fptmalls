@@ -1,0 +1,61 @@
+﻿@model BrandIntroduction
+
+@{
+    ViewBag.Title = "Edit_BrandIntroduction | Admin";
+    Layout = "_LayoutAdmin";
+
+}
+
+<div class="container">
+    <h2 class="my-3">
+        Edit brand_introduction
+        <a asp-controller="Admin" asp-action="BrandIntroductions" class="btn btn-warning" style="float:right">Back List Brand_Introductions</a>
+    </h2>
+    <hr class="text-primary" />
+    <form asp-action="EditBrandIntroduction" method="post" enctype="multipart/form-data">
+        <input asp-for="Id" hidden />
+        <table class="table table-borderless">
+            <tr>
+                <td style="width:200px">
+                    <label asp-for="Title" class="form-lable"></label>
+                </td>
+                <td>
+                    <input asp-for="Title" class="form-control w-50" />
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </td>
+            </tr>
+            <tr>
+                <td style="width:200px">
+                    <label class="form-lable">Content</label>
+                </td>
+                <td>
+                    <textarea asp-for="Content" class="form-control w-50" id="editor"></textarea>
+                    <span asp-validation-for="Content" class="text-danger"></span>
+                </td>
+            </tr>
+            <tr>
+                <td style="width:200px">
+                    <label class="form-lable">Brands</label>
+                </td>
+                <td>
+                    <select asp-for="Id_Brand" class="form-contro w-50l" asp-items="ViewBag.Id_Brand"></select>
+                    <span asp-validation-for="Id_Brand" class="text-danger"></span>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+
+
+@section AdminScripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,0 +1,118 @@
+﻿@model List<Movie>
+
+@{
+    Layout = "_LayoutCinema";
+    ViewData["TitleCinema"] = "Search Movies";
+}
+
+
+<div class="slider movie-items">
+    <div class="container">
+        <div class="container">
+            <div class="row ipad-width">
+                <div class="col-md-12">
+
+                    <div class="title-hd">
+                        <h2>Movies</h2>
+                    </div>
+                    <div class="tabs">
+                        <div class="tab-content">
+                            <div id="tab22" class="tab active">
+                                <div class="row">
+                                    <div class="slick-multiItem h-100">
+                                        @foreach (var movie in Model)
+                                        {
+                                            string posterPath = "/images_cinema/" + (movie.PosterPath ?? "default-poster.jpg");
+
+                                            <div class="slide-it">
+                                                <div class="movie-item">
+
+                                                    @if ((DateTime.Parse(movie.ReleaseDate) <= DateTime.Now))
+                                                    {
+                                                        <p class="btn textNowShowing">
+                                                            #Now Showing
+                                                        </p>
+                                                    }
+                                                    else
+                                                    {
+                                                        <p class="btn textComingSoon">
+                                                            #Coming Soon
+                                                        </p>
+                                                    }
+
+
+                                                    <div class="mv-img">
+                                                        <a asp-action="Details" asp-route-id=@movie.Id asp-controller="Movie">
+                                                            <img src="@posterPath" alt="" style="width:inherit; height:50vh">
+                                                        </a>
+                                                    </div>
+
+                                                    <div class="hvr-inner">
+                                                        <a asp-action="Details" asp-route-id=@movie.Id asp-controller="Movie">
+                                                            Read more <i class="ion-android-arrow-dropright"></i>
+                                                        </a>
+                                                    </div>
+
+                                                    <div class="title-in">
+                                                        <div class="cate" style="margin-bottom: 0 !important">
+                                                            <span class="blue"><a>@movie.Genre</a></span>
+                                                        </div>
+                                                        <h4>@movie.Title</h4>
+                                                        <p><i class="ion-android-star"></i><span>@movie.Ratings</span>/10</p>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        }
+
+                                    </div>
+                                    @if (Model.Count() == 0)
+                                    {
+                                        <img src="~/images_cinema/notfound.png" style="height:75vh;" />
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section CinemaStyles{
+    <style>
+        .hvr-inner {
+            padding: 8px 15px;
+            width: 130px !important;
+        }
+
+        .title-in {
+            color: white;
+        }
+
+            .title-in:hover {
+                color: #dcf836;
+            }
+
+            .title-in h4 {
+                padding: 10px 0;
+            }
+
+        .textNowShowing {
+            font-size: 14px;
+            color: #dcf836;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .textComingSoon {
+            font-size: 14px;
+            color: #abb7c4;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+    </style>
+}

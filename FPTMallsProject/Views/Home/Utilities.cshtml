@@ -1,0 +1,209 @@
+﻿@{
+    ViewData["TitleMalls"] = "Utilities";
+    Layout = "_LayoutMalls";
+
+}
+
+<section id="hero" class="inside-pages">
+    <div class="banners">
+        <div class="page-banner-title container-fluid h-100 w-100 bg-primary shops bg">
+            <div class="row">
+                <div class="col-md-10 offset-md-1">
+                    <div class="display-4 text-white">
+                        <div class="text-uppercase">
+                            <p><strong>UTILITIES</strong></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="page-banner-logo"></div>
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="page bg-convenience" id="conveniencePage">
+
+        <div class="container my-5" id="utilities">
+            <div class="scroll-mobile scroll-ultities">
+                <nav class="nav nav-pills vcr-nav-pills">
+                    <div class="scroll-mobile d-flex d-lg-none mx-auto">
+                        <div class="w3-bar w3-black nav nav-pills vcr-nav-pills">
+                            <button class="w3-bar-item w3-button nav-link convernience-filter-button filter-button cursor-pointer" onclick="openCity('untilities1')">General Utilities</button>
+                            <button class="w3-bar-item w3-button nav-link convernience-filter-button filter-button cursor-pointer" onclick="openCity('untilities2')">Facilities for people with disabilities</button>
+                            <button class="w3-bar-item w3-button nav-link convernience-filter-button filter-button cursor-pointer" onclick="openCity('untilities3')">Utilities for mother and baby</button>
+                        </div>
+                    </div>
+                    <div class="w3-bar w3-black nav nav-pills vcr-nav-pills d-none d-lg-flex mx-auto justify-content-center">
+                        <button class="w3-bar-item w3-button nav-link convernience-filter-button filter-button cursor-pointer text-uppercase mx-2 rav active" id="tab1" onclick="openCity('untilities1','tab1')">General Utilities</button>
+                        <button class="w3-bar-item w3-button nav-link convernience-filter-button filter-button cursor-pointer text-uppercase mx-2 rav" id="tab2" onclick="openCity('untilities2','tab2')">Facilities for people with disabilities</button>
+                        <button class="w3-bar-item w3-button nav-link convernience-filter-button filter-button cursor-pointer text-uppercase mx-2 rav" id="tab3" onclick="openCity('untilities3','tab3')">Utilities for mother and baby</button>
+                    </div>
+                </nav>
+            </div>
+            <div class="ultities-wrapper my-5">
+                <div class="w3-container untilities" id="untilities1">
+                    <div class="row mt-40 justify-content-center">
+                        <div class="col-md-3 col-6 mb-2sp mb-10-mb">
+                            <div class=" d-flex justify-content-center" data-bs-toggle="modal" data-bs-target="#general_utilitieswifi-mien-phi">
+                                <div class=" convenience_icon d-flex align-items-center justify-content-center rounded-circle background-size position-relative">
+                                    <img src="~/FPTImage/utilities/Wifi-1639649904.png" class="logo-icon" width="74px" style="
+    color: blue;
+    fill: blue;
+    -webkit-text-fill-color: blu;
+">
+                                </div>
+                            </div>
+                            <div class="title-utilities">
+                                <h2 class="fw-bold text-center text-uppercase">Free Wifi</h2>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3 col-6 mb-2sp mb-10-mb">
+                            <div class=" d-flex justify-content-center" data-bs-toggle="modal" data-bs-target="#general_utilitiesatm">
+                                <div class=" convenience_icon d-flex align-items-center justify-content-center rounded-circle background-size position-relative">
+                                    <img src="~/FPTImage/utilities/ATM-Icon.png" class="logo-icon" width="74px">
+                                </div>
+                            </div>
+                            <div class="title-utilities">
+                                <h2 class="fw-bold text-center text-uppercase">ATM</h2>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3 col-6 mb-2sp mb-10-mb">
+                            <div class=" d-flex justify-content-center" data-bs-toggle="modal" data-bs-target="#general_utilitiesbang-chi-dan-dien-tu">
+                                <div class=" convenience_icon d-flex align-items-center justify-content-center rounded-circle background-size position-relative">
+                                    <img src="~/FPTImage/utilities/BangChiDanDienTu-1639644501.png" class="logo-icon" width="74px">
+                                </div>
+                            </div>
+                            <div class="title-utilities">
+                                <h2 class="fw-bold text-center text-uppercase">
+                                    Electronic signage
+                                </h2>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+                <div class="w3-container untilities" id="untilities2" style="display:none">
+                    <div class="row mt-40 justify-content-center">
+                        <div class="col-md-3 col-6 mb-2sp mb-10-mb">
+                            <div class=" d-flex justify-content-center" data-bs-toggle="modal" data-bs-target="#disabled_people_utilitieswc-danh-cho-nguoi-khuyet-tat">
+                                <div class=" convenience_icon d-flex align-items-center justify-content-center rounded-circle background-size position-relative">
+                                    <img src="~/FPTImage/utilities/DanhChoNguoiKhuyetTat-1640594247.png" class="logo-icon" width="74px">
+                                </div>
+                            </div>
+                            <div class="title-utilities">
+                                <h2 class="fw-bold text-center text-uppercase">
+                                    WC for People
+                                    defect
+                                </h2>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3 col-6 mb-2sp mb-10-mb">
+                            <div class=" d-flex justify-content-center" data-bs-toggle="modal" data-bs-target="#disabled_people_utilitiesthang-cuon">
+                                <div class=" convenience_icon d-flex align-items-center justify-content-center rounded-circle background-size position-relative">
+                                    <img src="~/FPTImage/utilities/thang_may-1639710273.png" class="logo-icon" width="74px">
+                                </div>
+                            </div>
+                            <div class="title-utilities">
+                                <h2 class="fw-bold text-center text-uppercase">Elevator</h2>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+                <div class="w3-container untilities" id="untilities3" style="display:none">
+                    <div class="row mt-40 justify-content-center">
+                        <div class="col-md-3 col-6 mb-2sp mb-10-mb">
+                            <div class=" d-flex justify-content-center" data-bs-toggle="modal" data-bs-target="#mother_and_baby_utilitiesphong-thay-ta-cho-tre-em">
+                                <div class=" convenience_icon d-flex align-items-center justify-content-center rounded-circle background-size position-relative">
+                                    <img src="~/FPTImage/utilities/Phong-Thay-Ta .png" class="logo-icon" width="74px">
+                                </div>
+                            </div>
+                            <div class="title-utilities">
+                                <h2 class="fw-bold text-center text-uppercase">
+                                    Baby diaper changing room
+                                    younger sibling
+                                </h2>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+
+            </div>
+            <script>
+                function openCity(Name, av) {
+                    var i;
+                    var x = document.getElementsByClassName("untilities");
+                    var a = document.getElementsByClassName("rav");
+                    for (i = 0; i < x.length; i++) {
+                        x[i].style.display = "none";
+                        a[i].classList.remove("active");
+
+                    }
+                    document.getElementById(Name).style.display = "block";
+                    document.getElementById(av).classList.add("active");
+                }
+            </script>
+
+            <div class="ultilities-service-wrapper mt-2">
+                <div class="mb-77 mb-20-mb" data-category="">
+                    <h2 class="text-center fw-bold mb-5 mb-20 text-uppercase col-12">Service</h2>
+                    <div class="row mt-20 mt-0 justify-content-center">
+                        <div class="col-md-3 col-6 mb-2sp mb-10-mb">
+                            <div class=" d-flex justify-content-center" data-bs-toggle="modal" data-bs-target="#servicedich-vu-gui-xe-o-to-theo-thang">
+                                <div class=" convenience_icon d-flex align-items-center justify-content-center rounded-circle background-size position-relative">
+                                    <img src="~/FPTImage/utilities/GuiOToTheoThang.png" class="logo-icon" width="74px">
+                                </div>
+                            </div>
+                            <div class="title-utilities">
+                                <h2 class="fw-bold text-center text-uppercase">
+                                    Car parking service
+                                    by month
+                                </h2>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3 col-6 mb-2sp mb-10-mb">
+                            <div class=" d-flex justify-content-center" data-bs-toggle="modal" data-bs-target="#servicediem-sac-xe-dien-vinfast">
+                                <div class=" convenience_icon d-flex align-items-center justify-content-center rounded-circle background-size position-relative">
+                                    <img src="~/FPTImage/utilities/SacXeVinFast-1639646314.png" class="logo-icon" width="74px">
+                                </div>
+                            </div>
+                            <div class="title-utilities">
+                                <h2 class="fw-bold text-center text-uppercase">
+                                    Electric vehicle charging points
+                                    VinFast
+                                </h2>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3 col-6 mb-2sp mb-10-mb">
+                            <div class=" d-flex justify-content-center" data-bs-toggle="modal" data-bs-target="#servicetu-do-ilogic">
+                                <div class=" convenience_icon d-flex align-items-center justify-content-center rounded-circle background-size position-relative">
+                                    <img src="~/FPTImage/utilities/tu_do_I_Logic.png" class="logo-icon" width="74px">
+                                </div>
+                            </div>
+                            <div class="title-utilities">
+                                <h2 class="fw-bold text-center text-uppercase">iLogic Wardrobe</h2>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+            <div class="convenience_footer justify-content-center mt-85 d-none justify-content-center">
+                <a class="btn btn-outline-light my-5">See floor map</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+

@@ -1,0 +1,193 @@
+﻿@model Movie
+
+@{
+    ViewData["TitleCinema"] = "Details Movie";
+
+    Layout = "_LayoutCinema";
+    string posterPath = "~/images_cinema/" + (Model.PosterPath ?? "default-poster.jpg");
+    //check releaseDate block book
+    DateTime releaseDate = DateTime.Parse(Model.ReleaseDate);
+    bool isReleased = releaseDate <= DateTime.Now;
+}
+
+<div class="hero mv-single-hero">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <!-- <h1> movie listing - list</h1>
+                <ul class="breadcumb">
+                    <li class="active"><a href="#">Home</a></li>
+                    <li> <span class="ion-ios-arrow-right"></span> movie listing</li>
+                </ul> -->
+            </div>
+        </div>
+    </div>
+</div>
+<div class="page-single movie-single movie_single">
+    <div class="container">
+        <div class="row ipad-width2">
+            <div class="col-md-4 col-sm-12 col-xs-12">
+                <div class="movie-img sticky-sb">
+
+                    <img src="@posterPath" asp-append-version="true" />
+
+                    <div class="movie-btn">
+                        @if (!isReleased)
+                        {
+                            <div class="btn-transform transform-vertical red">
+                                <div><a href="#" class="item item-1 redbtn"> <i class="ion-play"></i> Watch Trailer</a></div>
+                                <div><a href="#" class="item item-2 redbtn fancybox-media hvr-grow"><i class="ion-play"></i></a></div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="btn-transform transform-vertical red">
+                                <div><a href="@(!string.IsNullOrEmpty(@Model.Trailer) ? @Model.Trailer : "#")" class="item item-1 redbtn"> <i class="ion-play"></i> Watch Trailer</a></div>
+                                <div><a href="@(!string.IsNullOrEmpty(@Model.Trailer) ? @Model.Trailer : "#")" class="item item-2 redbtn fancybox-media hvr-grow"><i class="ion-play"></i></a></div>
+                            </div>
+                            <div class="btn-transform transform-vertical">
+                                <div><a asp-controller="Booking" asp-action="Index" asp-route-id="@Model.Id" class="item item-2 yellowbtn"><i class="ion-card"></i></a></div>
+                                <div><a asp-controller="Booking" asp-action="Index" asp-route-id="@Model.Id" class="item item-1 yellowbtn"> <i class="ion-card"></i> Buy ticket</a></div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8 col-sm-12 col-xs-12">
+                <div class="movie-single-ct main-content">
+                    <h1 class="bd-hd">@ViewBag.Title </h1>
+
+                    <div style="color:white; margin-bottom: 20px">
+                        <h5 style="display:inline-block;"><i class="fa-solid fa-circle-dollar"></i>Duration: @ViewBag.Duration |</h5>
+                        <h5 style="display:inline-block;"><i class="fa-solid fa-circle-dollar"></i>Genre: @ViewBag.Genre</h5>
+                    </div>
+
+                    <div style="color:white; margin-bottom: 20px">
+                        <h5 style="display:inline-block;"><i class="fa-solid fa-circle-dollar"></i>Language: @ViewBag.Language |</h5>
+                        <h5 style="display:inline-block;"><i class="fa-solid fa-circle-dollar"></i>Released Date: @ViewBag.Released</h5>
+                    </div>
+
+
+                    <div class="movie-rate">
+                        <div class="rate">
+                            <i class="ion-android-star"></i>
+                            <p class="font-weight-bold">
+                                <span>@ViewBag.Ratings / 10</span><br>
+
+                            </p>
+                        </div>
+                        <div class="rate-star">
+                            <span style="font-size: 18px; color: #abb7c4; margin-right: 15px; margin-bottom: 0;">Rate This Movie:  </span>
+                            @if (int.TryParse(@ViewBag.Ratings, out int rating))
+                            {
+                                @for (int i = 1; i <= 10; i++)
+                                {
+                                    @if (i <= rating)
+                                    {
+                                        <i class="ion-ios-star"></i>
+                                    }
+                                    else
+                                    {
+                                        <i class="ion-ios-star-outline"></i>
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                <p>Invalid rating value.</p>
+                            }
+                        </div>
+                    </div>
+                    <div class="movie-tabs">
+                        <div class="tabs">
+                            <ul class="tab-links tabs-mv">
+                                <li class="active"><a href="#overview">Overview</a></li>
+
+                                <li><a href="#cast">  Director & Cast </a></li>
+
+                            </ul>
+                            <div class="tab-content">
+                                <div id="overview" class="tab active">
+                                    <div class="row">
+                                        <div class="col-md-8 col-sm-12 col-xs-12">
+                                            <p>@ViewBag.Describe</p>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div id="cast" class="tab">
+                                    <div class="row">
+
+                                        <input id="id" asp-for="@Model.Id" type="hidden" />
+                                        <!-- //== -->
+                                        <div class="title-hd-sm">
+                                            <h4>Director</h4>
+                                        </div>
+                                        <div class="mvcast-item">
+                                            <div class="cast-it">
+                                                <div class="cast-left" style="overflow: hidden; position: relative;">
+                                                    <a href="#">@ViewBag.Director</a>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <!-- //== -->
+                                        <div class="title-hd-sm">
+                                            <h4>Actors</h4>
+                                        </div>
+                                        <div class="mvcast-item">
+                                            <div class="cast-it">
+                                                <div class="cast-left" style="overflow: hidden; position: relative;">
+                                                    <a href="#">@ViewBag.Actor</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @*<div class="row ipad-width2">
+            <div class="col-md-4 col-sm-12 col-xs-12">
+                @if (ViewBag.SimilarMovies.Count != 0)
+                {
+                    <div class="container my-3">
+                        <h4 style="color: white; margin-bottom: 10px"><span class="badge bg-dark text-white">You might also like</span></h4>
+                        <div class="d-flex" style="overflow-x:auto;flex-wrap:nowrap">
+                            @foreach (var movie in ViewBag.SimilarMovies)
+                            {
+                                string poster = "~/images_cinema/" + (movie.PosterPath ?? "default-poster.jpg");
+                                <div class="my-2 me-2" style="flex:0 0 auto">
+                                    <a asp-action="Details" asp-route-id="@movie.Id" class="card rounded-3 text-decoration-none">
+                                        <img src="@poster" class="img-fluid" style="height: 25rem; width: 17rem" asp-append-version="true">
+                                        <div class="text-dark my-2" style="color: white; padding: 10px 0;">
+                                            <span style="text-align: center; max-width: 170px;">
+                                                @movie.Title
+                                            </span>
+                                        </div>
+                                    </a>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>*@
+
+    </div>
+
+
+
+
+    @section CinemaScripts{
+        <!--JQuery PAckage -->
+        <script src="/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+        <script src="/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    }

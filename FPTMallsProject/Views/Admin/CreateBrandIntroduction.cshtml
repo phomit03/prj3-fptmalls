@@ -1,0 +1,62 @@
+﻿@model BrandIntroduction
+
+@{
+    ViewBag.Title = "Add Brand_Introduction | Admin";
+    Layout = "_LayoutAdmin";
+
+}
+
+<div class="container">
+    <h2 class="my-3">
+        Add new brand_introduction
+        <a asp-for="Admin" asp-action="BrandIntroductions" class="btn btn-warning" style="float: right">Back List Brand_Introductions</a>
+    </h2>
+    <hr class="text-primary" />
+    <form asp-action="CreateBrandIntroduction" method="post" enctype="multipart/form-data">
+        <table class="table table-borderless">
+            <tr>
+                <td style="width:200px;">
+                    <label asp-for="Title" class="form-lable"></label>
+                </td>
+                <td>
+                    <input asp-for="Title" class="form-control w-50" accept="image/*" />
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </td>
+            </tr>
+            <tr>
+                <td style="width:200px;">
+                    <label asp-for="Content" class="form-lable"></label>
+                </td>
+                <td>
+                    <textarea asp-for="Content" class="form-control w-50" id="editor"></textarea>
+                    <span asp-validation-for="Content" class="text-danger"></span>
+                </td>
+            </tr>
+            <tr>
+                <td style="width:200px;">
+                    <label class="form-lable">Brands</label>
+                </td>
+                <td>
+                    <select asp-for="Id_Brand" class="form-control" asp-items="ViewBag.Id_Brand" style="width: 50%">
+                        <option value="" selected>Select Shop</option>
+                    </select>
+                    <span asp-validation-for="Id_Brand" class="text-danger"></span>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <button type="submit" class="btn btn-primary">Create</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+
+
+@section AdminScripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

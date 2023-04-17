@@ -1,0 +1,148 @@
+﻿@model ShowEditViewModel
+
+@{
+    ViewBag.Title = "Edit Show | Admin";
+    Layout = "_LayoutAdmin";
+
+}
+
+<div class="container">
+    <h2 class="my-3">
+        Edit show
+        <a asp-controller="Admin" asp-action="Shows" class="btn btn-warning" style="float:right">Back List Show</a>
+    </h2>
+    
+    <hr class="text-primary" />
+
+    <form asp-action="EditShow" method="post">
+        <input type="hidden" asp-for="MovieId" />
+
+        <table class="table table-borderless">
+            <tr>
+                <td>
+                    <label asp-for="MovieTitle" class="form-label"></label>
+                </td>
+                <td>
+                    <input asp-for="MovieTitle" class="form-control w-50" disabled readonly />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label asp-for="Language" class="form-label"></label>
+                </td>
+                <td>
+                    <input asp-for="Language" class="form-control w-50" disabled />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label asp-for="StartDate" class="form-label"></label>
+                </td>
+                <td>
+                    <input type="date" asp-for="StartDate" id="StartDate" class="form-control w-50" onchange="page_reload()" />
+                    <span asp-validation-for="StartDate" class="text-danger"></span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label asp-for="EndDate" class="form-label"></label>
+                </td>
+                <td>
+                    <input type="date" asp-for="EndDate" id="EndDate" class="form-control w-50" onchange="page_reload()" />
+                    <span asp-validation-for="EndDate" class="text-danger"></span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label asp-for="Time" class="form-label"></label>
+                </td>
+                <td>
+                    <input type="time" asp-for="Time" id="Time" class="form-control w-50" />
+
+                    <span asp-validation-for="Time" class="text-danger"></span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label class="form-label">Price ($)</label>
+                </td>
+                <td>
+                    <input type="number" min="0" max="100" asp-for="Price" class="form-control w-50" />
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+@section AdminScripts {
+
+    <script>
+
+        function page_reload() {
+            var StartDate = document.getElementById("StartDate").value;
+            var EndDate = document.getElementById("EndDate").value;
+            localStorage.setItem("StartDate", StartDate);
+            localStorage.setItem("EndDate", EndDate);
+            location.reload();
+        }
+
+        window.onload = function () {
+            var StartDate = localStorage.getItem("StartDate");
+            var EndDate = localStorage.getItem("EndDate");
+
+            if (StartDate == null)
+                return;
+
+            document.getElementById("StartDate").value = StartDate;
+
+            if (!EndDate)
+                return;
+
+            document.getElementById("EndDate").value = EndDate;
+            localStorage.removeItem("StartDate");
+            localStorage.removeItem("EndDate");
+
+            var AllTimeSlots = JSON.parse('@Json.Serialize(@Model.Time)');
+            var AllShows = JSON.parse('@Json.Serialize(@Model.AvailableShowSlot)');
+
+            for (var timeSlot in AllTimeSlots) {
+                console.log(AllTimeSlots[timeSlot]);
+                var time_option = document.getElementById("time_option");
+                var option = document.createElement("option");
+                option.value = AllTimeSlots[timeSlot];
+                option.text = AllTimeSlots[timeSlot];
+                time_option.add(option);
+            }
+
+            for (var show in AllShows) {
+                var time_option = document.getElementById("time_option");
+                console.log(StartDate + " " + EndDate);
+                console.log(fixed_date(AllShows[show].startDate) + " " + fixed_date(AllShows[show].endDate))
+                if (new Date(StartDate) <= new Date(fixed_date(AllShows[show].endDate))) {
+                    if (new Date(EndDate) > new Date(fixed_date(AllShows[show].startDate))) {
+                        console.log(AllShows[show].time)
+                        time_option.remove(AllShows[show].time);
+                        console.log(time_option)
+                    }
+                }
+            }
+        }
+
+        function fixed_date(str) {
+            var d = str.split("-");
+            var dd = d.reverse();
+            return dd.join("-");
+        }
+
+        function dothis() {
+            var time_option = document.getElementById("time_option");
+            console.log(time_option.value)
+        }
+    </script>
+}

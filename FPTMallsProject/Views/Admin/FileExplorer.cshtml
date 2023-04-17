@@ -1,0 +1,33 @@
+﻿@model IEnumerable<BrandIntroduction>
+
+@{
+    Layout = "_LayoutAdmin";
+    ViewBag.Title = "FileExplorer";
+
+}
+
+<div id="browseFile">
+    @foreach (var item in @ViewBag.fileInfo)
+    {
+        <div class="img-thumbnail">
+            <img src="@("~/image_detail/"+@item.Name)" alt="thumb" title="@item.Name" asp-append-version="true" width="120px" height="100px" />
+            <br />
+            @item.Name
+        </div>
+    }
+</div>
+
+@section AdminScripts {
+    <script>
+        $(document).ready(function () {
+            var funcNum = @(Context.Request.Query["CKEditorFuncNum"] + ";")
+                $('#browseFile').on('click', 'img', function () {
+                    var fileUrl = '/image_detail/' + $(this).attr('title');
+                    window.opener.CKEDITOR.tools.callFunction(funcNum, fileUrl);
+                    window.close();
+                }).hover(function () {
+                    $(this).css('cursor', 'pointer');
+                });
+        })
+    </script>
+}

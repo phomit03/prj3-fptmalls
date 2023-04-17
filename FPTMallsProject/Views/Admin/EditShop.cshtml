@@ -1,0 +1,43 @@
+﻿@model Shop
+
+@{
+    ViewBag.Title = "Edit Shop | Admin";
+    Layout = "_LayoutAdmin";
+
+}
+
+<div class="container">
+    <h2 class="my-3">
+        Edit shop
+        <a asp-controller="Admin" asp-action="Shops" class="btn btn-warning" style="float:right">Back List Shops</a>
+    </h2>
+    <hr class="text-primary" />
+    <form asp-action="EditShop" method="post" enctype="multipart/form-data">
+        <input asp-for="Id" hidden />
+        <table class="table table-borderless">
+            <tr>
+                <td style="width:200px">
+                    <label asp-for="Name" class="form-lable"></label>
+                </td>
+                <td>
+                    <input asp-for="Name" class="form-control w-50" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+
+
+@section AdminScripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

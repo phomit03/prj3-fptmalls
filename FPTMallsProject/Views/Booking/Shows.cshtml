@@ -1,0 +1,182 @@
+﻿@model SelectShowViewModel
+
+@{
+    Layout = "_LayoutCinema";
+    ViewData["TitleCinema"] = "Show Times";
+}
+
+
+<div class="hero common-hero">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md-12">
+
+                <div class="hero-ct">
+                    <button class="btn btn-back me-2 my-2" onclick="history.back()">&laquo; Back </button>
+                    <br />
+                    <br />
+                    <h2 class="title">@Model.MovieTitle</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="page-single movie_list">
+    <div class="container">
+        <div class="row ipad-width2">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+
+                <form asp-action="Shows" method="post">
+
+                    <input type="hidden" asp-for="MovieId">
+                    <input type="hidden" asp-for="MovieTitle">
+                    <input type="hidden" asp-for="ShowDate">
+                    <input type="hidden" asp-for="Language">
+
+                    <h5 class="my-3 text-show">
+                        Show Date: @Model.ShowDate
+                    </h5>
+                    <h5 class="my-3 text-show">
+                        Language: @Model.Language
+                    </h5>
+
+                    <h4 class="my-3 text-muted">Select Times</h4>
+
+                    <div class="radio-container">
+
+                        @if (Model.Times.Count != 0)
+                        {
+                            @foreach (var time in Model.Times)
+                            {
+                                <div class="radio-item">
+                                    <input asp-for="ShowId" type="radio" value="@time.Value" class="btn-check" id="@time.Value">
+                                    <label for="@time.Value" class="btn btn-outline-dark me-1">@time.Text</label>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <span class="text-danger">No shows available, try another date and language</span>
+                        }
+                    </div>
+                    <span asp-validation-for="ShowId" class="text-danger mx-3"></span>
+
+                    <br />
+
+                    <button type="submit" class="btn btn-next my-4">Next &raquo;</button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@****************************************************CSS***********************************************************@
+
+@section CinemaStyles {
+    <style>
+        .text-show {
+            color: white;
+            padding: 10px 0;
+        }
+
+        .text-danger {
+            margin-top: 5px;
+            color: red;
+        }
+
+        .btn-back {
+            float: left;
+            color: white;
+            background-color: #343a40;
+            padding: 6px 20px;
+            font-size: 17px;
+            border-radius: 5px;
+            border: none;
+            font-weight: bold;
+        }
+
+            .btn-back:hover {
+                background-color: #2c2f32;
+            }
+
+        .title {
+            margin-top: 30px;
+            color: white;
+            font-size: 60px;
+            text-align: center
+        }
+
+
+        .text-muted {
+            font-size: 30px;
+            padding: 20px 0;
+            color: white;
+        }
+
+        .title:hover {
+            color: #dcf836;
+        }
+
+        .radio-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+            .radio-container .radio-item {
+                display: flex;
+                align-items: center;
+            }
+
+                .radio-container .radio-item input[type="radio"] {
+                    display: none;
+                }
+
+                .radio-container .radio-item label {
+                    display: inline-block;
+                    padding: 8px 16px;
+                    border: 1px solid #dcf836;
+                    border-radius: 5px;
+                    font-size: 16px;
+                    cursor: pointer;
+                    color: #dcf836;
+                }
+
+                .radio-container .radio-item input[type="radio"]:checked + label {
+                    background-color: #dd003f;
+                    color: white;
+                }
+
+                .radio-container .radio-item label:hover {
+                    background-color: #dd003f;
+                    color: white;
+                }
+
+                .radio-container .radio-item input[type="radio"]:hover + label {
+                    background-color: #dd003f;
+                    color: white
+                }
+
+
+        .btn-next {
+            float: right;
+            color: #020d18;
+            background-color: #dcf836;
+            padding: 6px 20px;
+            font-size: 17px;
+            border-radius: 5px;
+            border: none;
+            font-weight: bold;
+        }
+
+
+            .btn-next:hover {
+                background-color: #b3cb26;
+            }
+    </style>
+}

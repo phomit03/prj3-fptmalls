@@ -1,0 +1,345 @@
+﻿@model List<SelectListItem>
+
+
+@{
+    Layout = "_LayoutCinema";
+    ViewData["TitleCinema"] = "Book Tickets";
+    var index = 0;
+}
+
+<div class="hero common-hero">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md-12">
+
+                <div class="hero-ct">
+                    <a class="btn btn-back me-2 my-2" asp-controller="Movie" asp-action="Index">&laquo; Back</a>
+                    <br />
+                    <br />
+                    <h2 class="title">@ViewBag.Title</h2>
+                    <h4 class="my-3 text-show">
+                        Show Date: @ViewBag.ShowDate | Show Time: @ViewBag.ShowTime | Language: @ViewBag.Language
+                    </h4>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="page-single movie_list">
+    <div class="container">
+        <div class="row ipad-width2">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+
+                <form asp-action="BookTickets" method="post">
+
+                    @*get datetime now*@
+                    <input type="hidden" name="BookingDateTime" value="@DateTime.Now.ToString("dd/MM/yyyy hh:mm tt")" />
+
+                    <input type="hidden" name="showId" value="@ViewBag.ShowId" />
+                    <input type="hidden" name="showDate" value="@ViewBag.ShowDate" />
+
+                    <div style="overflow: hidden;">
+                        <h4 class="my-3 text-show" style="float: left; margin-right: 20px;">
+                            Price: @ViewBag.Price$ / seat
+                        </h4>
+                        <button type="submit" class="btn btn-submit" style="float: right;" onclick="return checkSelectedSeats()">
+                            Book Tickets &raquo;
+                            </button>
+                    </div>
+
+
+                    <hr class="line" />
+
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div style="float: right" class="text-show">
+                            <a class="square">
+                                <i class="fa fa-square-o" style="color: #dcf836;"></i> : Empty Seat
+                            </a>
+                            &nbsp
+                            <a class="square">
+                                <i class="fa fa-square" style="color: #dd003f; border: 1px solid #dcf836; border-radius: 5px"></i> : Selecting Seat
+                            </a>
+                            &nbsp
+                            <a class="square">
+                                <i class="fa fa-square grey" style="color: grey; border: 1px solid #dcf836; border-radius: 5px"></i> : Soled Seat
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="my-5 w-70">
+                        <div class="screenline"></div>
+                        <h4 style="text-align: center; color: #808080">PROJECTION SCREEN</h4>
+                    </div>
+
+                    <br />
+                    <br />
+
+                    <div class="radio-container">
+                        @for (int i = 0; i < 8; i++)
+                        {
+                            for (int j = 0; j < 19; j++)
+                            {
+                                <div class="radio-item">
+                                    <input type="hidden" asp-for="@Model[index].Value"/>
+                                    <input asp-for="@Model[index].Selected" class="btn-check" id="@Model[index].Value" disabled="@Model[index].Disabled" hidden>
+                                    <label for="@Model[index].Value" class="btn @(Model[index].Disabled ? "btn-secondary" : "btn-outline-success") me-1 my-1" style="width:3em; height:3em">@Model[index].Text</label>
+                                </div>
+
+                                index++;
+                            }
+                            <br />
+                        }
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@**********************************************************JS*********************************************************@
+
+@section CinemaScripts {
+    @*check the selected seat*@
+    <script>
+        function checkSelectedSeats() {
+            // Get a list of seat selection buttons
+            const seatButtons = document.querySelectorAll('.btn-check');
+
+            // Count the number of selected seats
+            let numSelectedSeats = 0;
+            seatButtons.forEach(button => {
+                if (button.checked) {
+                    numSelectedSeats++;
+                }
+            });
+
+            // If no seats are selected, show an error message and keep the page as is
+            if (numSelectedSeats === 0) {
+                alert('Please select at least one seat to book a ticket.');
+                return false;
+            }
+
+            // If seats are selected, show a success message and submit the form
+            const confirmResult = confirm(`You have selected ${numSelectedSeats} seats. Press OK to confirm your booking, or Cancel to cancel.`);
+            if (confirmResult) {
+                return true;
+            } else {
+                return false; // If the user clicks Cancel, keep the page as is
+            }
+        }
+    </script>
+
+
+    @*Book up to 8 seats in 1 turn*@
+    <script>
+        $(document).ready(function () {
+            var maxSeats = 8; // maximum number of seats allowed
+            var selectedSeats = 0; // number of seats currently selected
+            $(".btn-check").change(function () {
+                if ($(this).prop("checked")) {
+                    // a seat has been selected
+                    selectedSeats++;
+                    if (selectedSeats > maxSeats) {
+                        // too many seats selected, uncheck the current one
+                        $(this).prop("checked", false);
+                        selectedSeats--;
+                        alert("You can only select up to " + maxSeats + " seats.");
+                    }
+                }
+                else {
+                    // a seat has been deselected
+                    selectedSeats--;
+                }
+            });
+        });
+    </script>
+}
+
+
+
+@****************************************************CSS***********************************************************@
+
+@section CinemaStyles {
+    <style>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" >
+
+        .fa::before {
+            font-size: 30px;
+            border-radius: 10%;
+        }
+
+        .square {
+            font-size: 18px;
+            border: none;
+            background: none;
+            color: white
+        }
+
+            .square:hover {
+                color: #dcf836
+            }
+
+        .screenline {
+            width: 100%;
+            height: 70px;
+            border: solid 20px;
+            border-color: grey transparent transparent transparent;
+            border-radius: 50%/100px 100px 0 0;
+            margin-top: 80px;
+        }
+
+        .line {
+            height: 1px;
+            background-color: white
+        }
+
+        .text-show {
+            color: white;
+            padding: 10px 0;
+        }
+
+        .text-danger {
+            margin-top: 5px;
+            color: red;
+        }
+
+        .btn-back {
+            float: left;
+            color: white;
+            background-color: #343a40;
+            padding: 6px 20px;
+            font-size: 17px;
+            border-radius: 5px;
+            border: none;
+            font-weight: bold;
+        }
+
+            .btn-back:hover {
+                background-color: #2c2f32;
+                color: white;
+            }
+
+        .title {
+            margin-top: 30px;
+            color: white;
+            font-size: 60px;
+            text-align: center
+        }
+
+
+        .text-muted {
+            font-size: 30px;
+            padding: 20px 0;
+            color: white;
+        }
+
+        .title:hover {
+            color: #dcf836;
+        }
+
+        .btn-outline-success {
+            background-color: transparent;
+            border-color: #dd003f;
+            color: #dd003f;
+            font-weight: bold;
+        }
+
+            .btn-outline-success:hover {
+                background-color: #dd003f;
+                color: #fff;
+            }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            border-color: #6c757d;
+            color: #fff;
+            font-weight: bold;
+        }
+
+            .btn-secondary:hover {
+                background-color: #6c757d;
+                border-color: #6c757d;
+            }
+
+        .btn-check:checked + label {
+            background-color: #dd003f;
+            color: #fff;
+        }
+
+        .btn-check + label {
+            cursor: pointer;
+            font-size: 0.8rem;
+            padding: 0.5rem;
+            text-align: center;
+            width: 3em;
+            height: 3em;
+            display: inline-block;
+            margin: 0.1rem;
+        }
+
+        .radio-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 50px;
+            display: flex;
+            justify-content: center;
+        }
+
+            .radio-container .radio-item {
+                display: flex;
+                align-items: center;
+            }
+
+                .radio-container .radio-item input[type="radio"] {
+                    display: none;
+                }
+
+                .radio-container .radio-item label {
+                    display: inline-block;
+                    padding: 10px 10px;
+                    border: 1px solid #dcf836;
+                    border-radius: 5px;
+                    font-size: 16px;
+                    cursor: pointer;
+                    color: #dcf836;
+                }
+
+                .radio-container .radio-item input[type="radio"]:checked + label {
+                    background-color: #dd003f;
+                    color: white;
+                }
+
+                .radio-container .radio-item label:hover {
+                    background-color: #dd003f;
+                    color: white;
+                }
+
+                .radio-container .radio-item input[type="radio"]:hover + label {
+                    background-color: #dd003f;
+                    color: white
+                }
+
+
+        .btn-submit {
+            float: right;
+            color: #020d18;
+            background-color: #dcf836;
+            padding: 6px 20px;
+            font-size: 17px;
+            border-radius: 5px;
+            border: none;
+            font-weight: bold;
+        }
+
+
+            .btn-submit:hover {
+                background-color: #b3cb26;
+            }
+    </style>
+}

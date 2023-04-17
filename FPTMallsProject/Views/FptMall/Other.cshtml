@@ -1,0 +1,128 @@
+﻿@model IEnumerable<Brand>
+
+@{
+    ViewData["Title"] = "Other";
+    Layout = "_LayoutMalls";
+
+}
+
+<section id="hero" class="inside-pages">
+    <div class="banners">
+        <div class="page-banner-title container-fluid h-100 w-100 bg-primary shops bg">
+            <div class="row">
+                <div class="col-md-10 offset-md-1">
+                    <div class="display-4 text-white">
+                        <div class="text-uppercase">
+                            <p><strong>Shops</strong></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="page-banner-logo"></div>
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-10 offset-md-1 px-0 px-md-1">
+                <div id="breadcrumbs" class="container-fluid">
+                    <ul class="breadcrumb bd-b_none">
+                        <li>
+                            <a asp-controller="Home" asp-action="Index"><span class="fa fa-home" aria-hidden="true"></span></a>
+                        </li>
+                        <li>
+                            <a asp-controller="FptMall" asp-action="Other">Other</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <form id="frmFilterStore" class="d-flex flex-row center-filter h-auto mt-20 mt-md-80" method="get" action="@Url.Action("Index")">
+                    <input name="searchString" id="q" placeholder="Search by stall name" value="@ViewBag.searchString" class="form-control fw-light h-md-50px h-sm-36px center-name mx-2 me-2 me-md-20 mb-20-mb mb-sm-12 fs-12-mb h-36">
+                    <div class="stall-search-form d-flex justify-content-between" data-select2-id="select2-data-5-4noo">
+                        <div class="select2-custom mx-2 me-sm-20 me-md-20 me-3 h-md-50px h-sm-36px fs-12-mb p-0 stall-dropdown" data-category="store_category">
+                            <select name="store_category" id="scate" class="select2 fw-light form-control fs-12-mb h-36 select2-hidden-accessible" tabindex="-1" aria-hidden="true">
+                                <option class="fs-12-mb" value="" selected="@(ViewBag.store_category == null)">
+                                    Shops
+                                </option>
+                                @foreach (var item in ViewBag.shops)
+                                {
+                                    <option class="fs-12-mb" value="@item.Name" name="@item.Name" selected="@(ViewBag.store_category == item.Name)">
+                                        @item.Name
+                                    </option>
+                                }
+
+
+                            </select><span class="select2 select2-container select2-container--default select2-container--above" dir="ltr" style="width: 250px;">
+                                <span class="selection">
+                                    <span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-disabled="false" aria-labelledby="select2-scate-container" aria-controls="select2-scate-container">
+                                        <span class="select2-selection__rendered" id="select2-scate-container" role="textbox" aria-readonly="true" title="Thời trang">
+                                        </span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span>
+                                    </span>
+                                </span><span class="dropdown-wrapper" aria-hidden="true"></span>
+                            </span>
+                        </div>
+                        <button type="submit" class="btn search-btn btn-primary mx-2 h-md-50px h-sm-36px text-small text-nowrap ms-md-0 fw-light py-3 h-36 fs-12-mb" role="button">
+                            <img src="/svg/search-white.svg" alt="" class="d-flex d-lg-none">
+                            <span class="d-none d-lg-block">
+                                Search
+                            </span>
+                        </button>
+                    </div>
+                </form>
+
+                <div class="fashion_content mt-80 mt-sm-40">
+                    @foreach (var category in ViewBag.shops)
+                    {
+                        <div class="mb-sm-24 col-12  mt-md-20 ">
+                            @foreach (var item in Model.Where(b => b.Shop.Name == category.Name).Take(1))
+                            {
+                                <h6 class="text-primary text-uppercase mb-sm-16 txt_custom fs-14-mb-tl fw-600">
+                                    @category.Name
+                                </h6>
+                            }
+
+                            <div class="carousel-alt">
+                                <div class="row">
+                                    @foreach (var item in Model.Where(b => b.Shop.Name == category.Name))
+                                    {
+                                        <div class="card card_test col-lg-3 col-6 col-md-4 mb-md-40" category-item="" data-filter-title="@item.Name">
+                                            <a class="card-figure h-auto mb-sm-8" asp-controller="FptMall" asp-action="Detail" asp-route-id="@item.Id">
+                                                <div class="ratio" style="--bs-aspect-ratio: 75%;">
+                                                    <div class="item_thuonghieu w-100 h-100 p-md-20 p-lg-30 d-flex align-items-center justify-content-center mx-auto overflow-hidden" style="padding: 16px">
+                                                        <img class="mw-100 mh-100 w-auto h-auto p-0" style="object-fit: contain;" src="@("~/image/"+@item.Image)" asp-append-version="true" alt="@item.Name">
+                                                    </div>
+                                                </div>
+                                                <div class="card-overlay">
+                                                    <h6 class="text-center mb-1">@item.Name</h6>
+                                                    <p class="text-muted text-center m-0">@item.Level_brand</p>
+                                                </div>
+                                            </a>
+                                            <div class="card-body mt-0 mt-md-10">
+                                                <h6 class="card-title text-ellipsis-2 mb-0-mb-tl">
+                                                    <a class="txt_custom fs-14-mb-tl fw-600" asp-controller="FptMall" asp-action="Detail" asp-route-id="@item.Id">@item.Name</a>
+                                                </h6>
+                                                <h6 class="card-title mb-0 text-muted fw-400 d-block d-md-none">
+                                                    <p class="fs-12-mb-tl mb-16-mb-tl">@item.Level_brand</p>
+                                                </h6>
+                                            </div>
+                                        </div>
+
+                                    }
+
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+
+</section>
+

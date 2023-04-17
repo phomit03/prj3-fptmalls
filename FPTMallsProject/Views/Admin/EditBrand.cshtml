@@ -1,0 +1,70 @@
+﻿@model Brand
+
+@{
+    ViewBag.Title = "Edit Brand | Admin";
+    Layout = "_LayoutAdmin";
+
+}
+
+<div class="container">
+    <h2 class="my-3">
+        Edit movie
+        <a asp-controller="Admin" asp-action="Brands" class="btn btn-warning" style="float:right">Back List Brands</a>
+    </h2>
+    <hr class="text-primary" />
+    <form asp-action="EditBrand" method="post" enctype="multipart/form-data">
+        <input asp-for="Id" hidden />
+        <table class="table table-borderless">
+            <tr>
+                <td style="width:200px">
+                    <label asp-for="ImageFile" class="form-lable"></label>
+                </td>
+                <td>
+                    <input asp-for="ImageFile" class="form-control w-50" />
+                    <span asp-validation-for="ImageFile" class="text-danger"></span>
+                </td>
+            </tr>
+            <tr>
+                <td style="width:200px">
+                    <label asp-for="Name" class="form-lable"></label>
+                </td>
+                <td>
+                    <input asp-for="Name" class="form-control w-50" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </td>
+            </tr>
+            <tr>
+                <td style="width:200px">
+                    <label class="form-lable">Level Brand</label>
+                </td>
+                <td>
+                    <input asp-for="Level_brand" class="form-control w-50" />
+                    <span asp-validation-for="Level_brand" class="text-danger"></span>
+                </td>
+            </tr>
+            <tr>
+                <td style="width:200px">
+                    <label class="form-lable">Shops</label>
+                </td>
+                <td>
+                    <select asp-for="Id_Shop" class="form-contro w-50l" asp-items="ViewBag.Id_Shop"></select>
+                    <span asp-validation-for="Id_Shop" class="text-danger"></span>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+
+
+@section AdminScripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,0 +1,82 @@
+﻿@model IEnumerable<Movie>
+
+@{
+    ViewBag.Title = "Movies | Admin";
+    Layout = "_LayoutAdmin";
+
+    var index = 0;
+}
+
+<div class="container my-3">
+    <h2 class="my-3">List of movies</h2>
+    <hr class="text-primary" />
+
+    <a asp-action="CreateMovie" class="btn btn-sm btn-primary">Add New Movie</a>
+    <table class="table table-hover my-3">
+        <thead class="table-dark">
+            <tr>
+                <th>#</th>
+                <th>Title</th>
+                <th>Released On</th>
+                <th>Ratings</th>
+                <th>Duration</th>
+                <th>Language</th>
+                <th>Actor</th>
+                <th>Director</th>
+                <th>Genre</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var movie in Model)
+            {
+                index++;
+                <tr>
+                    <td>@index</td>
+                    <td>@movie.Title</td>
+                    <td>@DateTime.Parse(movie.ReleaseDate).ToString("dd/MM/yyyy")</td>
+                    <td>@DateTime.Parse(movie.Duration).ToString("HH:mm:ss")</td>
+                    <td>@movie.Ratings</td>
+                    <td>@movie.Language</td>
+                    <td>@movie.Actor</td>
+                    <td>@movie.Director</td>
+                    <td>@movie.Genre</td>
+                    <td>
+                        <a asp-controller="Movie" asp-action="Details" asp-route-id="@movie.Id">View</a>
+                        &nbsp;
+                        <a asp-action="EditMovie" asp-route-id="@movie.Id">Edit</a>
+                        &nbsp;
+                        <a href="#" onclick="confirmDelete(@movie.Id)" style="color:red">Delete</a>
+
+                        &nbsp;
+
+                        @*disable if ReleaseDate > Datetime now*@
+
+                        @if (DateTime.Parse(@movie.ReleaseDate) > DateTime.Now)
+                        {
+                            <button class="btn btn-sm btn-secondary" disabled>
+                                <a class="text-white text-decoration-none">Add Show</a>
+                            </button>
+                        }
+                        else
+                        {
+                            <a class="text-white text-decoration-none" asp-action="CreateShow" asp-route-id="@movie.Id">
+                                <button class="btn btn-sm btn-primary">Add Show</button>
+                            </a>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@section AdminScripts {
+    <script>
+        function confirmDelete(Id) {
+            if (confirm("Are you sure you want to delete this movie?")) {
+                window.location.href = '/Admin/DeleteMovie/' + Id;
+            }
+        }
+    </script>
+}
